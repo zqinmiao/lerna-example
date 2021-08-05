@@ -1,0 +1,17 @@
+{
+  "name": "package-c",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node ./index.js",
+    "depcheck": "depcheck",
+    "eslint": "eslint --version"
+  },
+  "keywords": [],
+  "author": "",
+  "dependencies": {
+    "package-b": "1.0.0"
+  },
+  "license": "ISC"
+}
