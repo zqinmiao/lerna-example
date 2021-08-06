@@ -2,4 +2,4 @@ require("package-b");
 
 const eslint = require("eslint");
 
-console.log("eslint", eslint.CLIEngine.version);
+console.log("eslint0", eslint.CLIEngine.version);
