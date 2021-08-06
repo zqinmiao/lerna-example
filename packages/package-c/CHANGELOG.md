@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [0.0.5-alpha.0](https://github.com/zqinmiao/lerna-example/compare/@buibis/package-c@0.0.4-alpha.0...@buibis/package-c@0.0.5-alpha.0) (2021-08-06)
+
+
+### 🎸 TEST-Features
+
+* 测测未被依赖的package 改变，会发生什么 ([358e192](https://github.com/zqinmiao/lerna-example/commit/358e1923f7bf88fabb0eed08c840dd2c88d35828))
+
+
+
 ### [0.0.4-alpha.0](https://github.com/zqinmiao/lerna-example/compare/@buibis/package-c@0.0.3-alpha.0...@buibis/package-c@0.0.4-alpha.0) (2021-08-06)
 
 
