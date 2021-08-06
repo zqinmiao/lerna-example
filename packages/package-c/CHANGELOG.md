@@ -1,3 +1,17 @@
+# Change Log
+
+All notable changes to this project will be documented in this file.
+See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+
+### [0.0.4-alpha.0](https://github.com/zqinmiao/lerna-example/compare/@buibis/package-c@0.0.3-alpha.0...@buibis/package-c@0.0.4-alpha.0) (2021-08-06)
+
+
+### 🎸 Features
+
+* 去除standard-version ([b95fea9](https://github.com/zqinmiao/lerna-example/commit/b95fea916196ba4ad9fff3d27f3c2f3d534fac36))
+
+
+
 # Changelog
 ### 0.0.3-alpha.0 (2021-08-06)
 
