@@ -1,5 +1,7 @@
 # Lerna example
 
+lerna4.x 与 npm 结合
+
 ## 开始的基本操作
 
 ```bash

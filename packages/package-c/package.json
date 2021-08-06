@@ -1,17 +1,21 @@
 {
-  "name": "package-c",
-  "version": "1.0.0",
+  "name": "@buibis/package-c",
+  "version": "0.0.1",
   "description": "",
   "main": "index.js",
   "scripts": {
     "start": "node ./index.js",
     "depcheck": "depcheck",
-    "eslint": "eslint --version"
+    "eslint": "eslint --version",
+    "release": "standard-version"
   },
   "keywords": [],
   "author": "",
+  "publishConfig": {
+    "access": "public"
+  },
   "dependencies": {
-    "package-b": "1.0.0"
+    "@buibis/package-b": "1.0.0"
   },
   "license": "ISC"
 }
