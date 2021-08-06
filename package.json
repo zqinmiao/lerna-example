@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "r": "lerna version --no-push",
     "version": "lerna run release && git add .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
