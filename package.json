@@ -4,18 +4,17 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "r": "lerna version --no-push",
-    "version": "lerna run release && git add .",
+    "r": "lerna version --no-push --conventional-commits",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "conventional-changelog-conventionalcommits": "^4.6.0",
     "depcheck": "^1.4.2",
     "eslint": "^7.32.0",
-    "lerna": "^4.0.0",
-    "standard-version": "^9.3.1"
+    "lerna": "^4.0.0"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"

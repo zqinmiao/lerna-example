@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "node ./index.js",
-    "release": "standard-version && npm run build",
-    "build": "echo \"开始build\" && mkdir build && cp index.js build && cp CHANGELOG.md build",
+    "postversion": "npm run build",
+    "build": "echo \"开始build\" && rm -rf build && mkdir build && cp index.js build && cp CHANGELOG.md build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],

@@ -6,8 +6,7 @@
   "scripts": {
     "start": "node ./index.js",
     "depcheck": "depcheck",
-    "eslint": "eslint --version",
-    "release": "standard-version"
+    "eslint": "eslint --version"
   },
   "keywords": [],
   "author": "",

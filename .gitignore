@@ -12,8 +12,7 @@ deploy_versions/
 .rn_temp/
 
 # production
-/build
-/dist
+/**/build/
 /**/dist
 *.tgz
 
