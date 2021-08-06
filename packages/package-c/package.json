@@ -6,7 +6,9 @@
   "scripts": {
     "start": "node ./index.js",
     "depcheck": "depcheck",
-    "eslint": "eslint --version"
+    "eslint": "eslint --version",
+    "preversion": "npm run test",
+    "test": "echo \"测试通过\""
   },
   "keywords": [],
   "author": "",

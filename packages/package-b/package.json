@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "node ./index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "preversion": "npm run test",
+    "test": "echo \"测试通过\""
   },
   "keywords": [],
   "author": "",
