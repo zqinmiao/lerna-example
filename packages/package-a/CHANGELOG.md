@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [1.0.5-alpha.0](https://github.com/zqinmiao/lerna-example/compare/@buibis/package-a@1.0.4-alpha.0...@buibis/package-a@1.0.5-alpha.0) (2021-08-09)
+
+
+### 🎸 Features
+
+* 更改package-a的index.js，看看package-b在执行test时是否输入package-a最新的结果 ([97833f4](https://github.com/zqinmiao/lerna-example/commit/97833f4e021c9871687648a53ea996ea35b5305c))
+
+
+
 ### [1.0.4-alpha.0](https://github.com/zqinmiao/lerna-example/compare/@buibis/package-a@1.0.3-alpha.0...@buibis/package-a@1.0.4-alpha.0) (2021-08-09)
 
 
