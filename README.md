@@ -34,12 +34,12 @@ $ npx lerna init --independent
 
 根部 package.json
 
-```
+```json
 {
-	"devDependencies": {
+  "devDependencies": {
     "lerna": "^4.0.0",
     "eslint": "^7.32.0"
-  },
+  }
 }
 ```
 
@@ -282,7 +282,7 @@ CHANGELOG.md 内容会出现重复的现象，如下，「增加 standard-versio
 
 lerna.json 中增加如下配置
 
-```bash
+```json
 {
 	"version": {
      "changelogPreset": {
@@ -312,7 +312,6 @@ lerna.json 中增加如下配置
       }
     }
   }
-
 }
 ```
 
