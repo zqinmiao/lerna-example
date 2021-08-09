@@ -12,7 +12,8 @@
   "keywords": [],
   "author": "",
   "publishConfig": {
-    "access": "public"
+    "access": "public",
+    "directory": "build"
   },
   "dependencies": {
     "lodash": "^4.17.21"

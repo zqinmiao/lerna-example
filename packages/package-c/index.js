@@ -1,4 +1,4 @@
-require("package-b");
+require("@buibis/package-b");
 
 const eslint = require("eslint");
 
