@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [1.0.4-alpha.0](https://github.com/zqinmiao/lerna-example/compare/@buibis/package-a@1.0.3-alpha.0...@buibis/package-a@1.0.4-alpha.0) (2021-08-09)
+
+
+### 🎸 Features
+
+* 测测publishConfig.directory，及更新版本后，依赖它的package会更新自身的node_modules吗 ([d9d321a](https://github.com/zqinmiao/lerna-example/commit/d9d321a678a288003183c3ffbb2bb463b87c5f5e))
+
+
+
 ### [1.0.3-alpha.0](https://github.com/zqinmiao/lerna-example/compare/@buibis/package-a@1.0.2-alpha.0...@buibis/package-a@1.0.3-alpha.0) (2021-08-06)
 
 
