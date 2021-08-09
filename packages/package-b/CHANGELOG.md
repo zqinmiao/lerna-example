@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [1.2.3-alpha.0](https://github.com/zqinmiao/lerna-example/compare/@buibis/package-b@1.2.2-alpha.0...@buibis/package-b@1.2.3-alpha.0) (2021-08-09)
+
+
+### 🎸 Features
+
+* 更改一下package-b的scropts ([b3ec474](https://github.com/zqinmiao/lerna-example/commit/b3ec474f6c738a09b369f9ecd87be16b9dd0b17b))
+
+
+
 ### [1.2.2-alpha.0](https://github.com/zqinmiao/lerna-example/compare/@buibis/package-b@1.2.1-alpha.0...@buibis/package-b@1.2.2-alpha.0) (2021-08-09)
 
 
