@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [1.2.5-alpha.0](https://github.com/zqinmiao/lerna-example/compare/@buibis/package-b@1.2.4-alpha.0...@buibis/package-b@1.2.5-alpha.0) (2021-08-09)
+
+
+### 🎸 Features
+
+* 将package-b依赖的package-a的版本改为非本地的版本 ([6a93d7f](https://github.com/zqinmiao/lerna-example/commit/6a93d7f604d9bee965435b7f15f83ae20d411e8c))
+
+
+
 ### [1.2.4-alpha.0](https://github.com/zqinmiao/lerna-example/compare/@buibis/package-b@1.2.3-alpha.0...@buibis/package-b@1.2.4-alpha.0) (2021-08-09)
 
 **Note:** Version bump only for package @buibis/package-b
