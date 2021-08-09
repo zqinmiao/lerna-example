@@ -5,8 +5,10 @@
   "main": "index.js",
   "scripts": {
     "start": "node ./index.js",
-    "preversion": "npm run test",
-    "test": "echo \"测试通过\""
+    "postversion": "npm run build",
+    "build": "echo \"building......\"",
+    "postbuild": "npm run test",
+    "test": "echo \"测试通过\" && npm run start"
   },
   "keywords": [],
   "author": "",
