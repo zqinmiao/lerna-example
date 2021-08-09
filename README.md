@@ -55,14 +55,16 @@ package-c/package.json
 
 ## 探索工作流
 
-### Make changes && Commit those changes
+## lerna version
+
+下面我们从 lerna version 开始探索 lerna 的工作流
+
+Make changes && Commit those changes
 
 ```bash
 $ git add .
 $ git commit -m "xxxx"
 ```
-
-## lerna version
 
 直接执行`lerna version`，如果没有关联远程仓库的情况下，会有如下报错：
 
@@ -124,7 +126,7 @@ Changes:
 
 我们尝试使用`lerna-changelog`来生成`CHANGELOG.md`。
 
-原因（其中 labels 和 ignoreCommitters 是比较不错的）：
+它有以下特点：
 
 - repo: Your "org/repo" on GitHub (automatically inferred from the package.json file)
 
@@ -172,7 +174,7 @@ lerna ERR! lifecycle "postversion" errored in "lerna-example", exiting 1
 ```json
 {
   "changelog": {
-    "repo": "https://github.com/zqinmiao/conventional-changelog-example"
+    "repo": "https://github.com/xxxx/xxx"
   }
 }
 ```
@@ -358,32 +360,44 @@ lerna version [major | minor | patch | premajor | preminor | prepatch | prerelea
 $ npm run r prepatch
 ```
 
+## 加入 Lint 流程
+
+Lint 步骤一般放在更新版本号之前，即`preversion`，在每个子包的 package.json 的 scripts 设置如下：
+
+```json
+{
+  "scripts": {
+    "preversion": "npm run codecheck",
+    "codecheck": "echo \"开始codecheck\""
+  }
+}
+```
+
+## 加入测试流程
+
+测试步骤也是放在更新版本号之前（如果有 Lint，可放在 Lint 之后），一般应为`preversion`，在每个子包的 package.json 的 scripts 设置如下：
+
+```json
+{
+  "scripts": {
+    "preversion": "npm run test",
+    "test": "echo \"测试通过\""
+  }
+}
+```
+
 ## 加入构建流程
 
 构建步骤一般放在更新版本号之后，即`postversion`，在每个子包的 package.json 的 scripts 设置如下：
 
 ```json
 {
-	"scripts": {
-    "postversion": "npm run build",
-    "build": "echo \"开始build\"
-  },
-}
-```
-
-## 加入测试流程
-
-测试步骤一般放在更新版本号之前，即`preversion`，在每个子包的 package.json 的 scripts 设置如下：
-
-```json
-{
   "scripts": {
-    "test": "echo \"测试通过\""
+    "postversion": "npm run build",
+    "build": "echo \"开始build\""
   }
 }
 ```
-
-如果有一个没有测试通过，应当`git checkout -- .`后，确保测试通过后，重新走上面的流程。
 
 ## 使用[`lerna publish`](https://github.com/lerna/lerna/tree/main/commands/publish#lernapublish)将包发布到 npm registry
 
@@ -412,5 +426,69 @@ lerna publish from-package # explicitly publish packages where the latest versio
 - [publishConfig.directory](https://github.com/lerna/lerna/tree/main/commands/publish#publishconfigdirectory)
 
   如果需要指定发包的文件夹，可设置 publishConfig.directory
+
+## 添加 packages
+
+### 新的 packages
+
+在`packages`文件夹中为你的的 package 创建一个目录，然后正常运行 `npm init` 为你的的新包创建 package.json。
+
+或者使用[`lerna create <name> [loc]`](https://github.com/lerna/lerna/tree/main/commands/create#readme)
+
+### 已存在的 packages
+
+您可以使用 [lerna import <package>](https://github.com/lerna/lerna/blob/main/commands/import/README.md) 将现有 package 传输到您的 Lerna 存储库中；此命令将保留提交历史记录。
+
+[lerna import <package>](https://github.com/lerna/lerna/blob/main/commands/import/README.md) 采用本地路径而不是 URL。在这种情况下，你将需要在你的文件系统上拥有您希望链接到的存储库。
+
+#### [--preserve-commit](https://github.com/lerna/lerna/tree/main/commands/import#--preserve-commit)
+
+建议使用`--preserve-commit`，因为这样可以保留原始的 commit 人员的记录
+
+```bash
+$ cd ~/Product
+
+# 查看路径
+$ pwd
+
+$ lerna import ~/Product --preserve-commit
+```
+
+## 包的依赖及更新
+
+lerna 会分析包及包的依赖更新，假设：package-c 依赖 package-b，package-b 依赖 package-a。在一次更改中，package-a 被更改后，运行`lerna version --no-push --conventional-commits prepatch`，lerna 工作的流程如下：
+
+- 先执行`package-c`及相关的 lifecycle
+- 执行`package-a`及相关的 lifecycle
+- 最后执行`package-b`及相关的 lifecycle
+
+这样的工作流就确保了依赖和被依赖的构建及测试流程能够完全符合预期。
+
+### CHANGELOG.md
+
+依然接上面的场景，`package-a`被更改后的 git commit，在生成 changelog 时，只会出现在`package-a`的`CHANGELOG.md`中。`package-b`和`package-c`由于只是被动依赖触发的版本更新，所以更新的 changelog 内容如下：
+
+```
+### [1.2.4-alpha.0](https://github.com/zqinmiao/lerna-example/compare/@buibis/package-b@1.2.3-alpha.0...@buibis/package-b@1.2.4-alpha.0) (2021-08-09)
+
+**Note:** Version bump only for package @buibis/package-b
+
+```
+
+### 依赖非 packages 中的包的版本
+
+比如`package-b`中依赖的`package-a`的版本不是本地的版本`1.0.5-alpha.0`，而是线上的`^1.0.3-alpha.0`。那么在更新`package-a`时，`package-b`就不会受到联动更新了。
+
+## 将本地代码 push 至远程
+
+通常，在将各个包发布到远程 registry 后，应当第一时间将本地代码 push 至远程 git 仓库。所以应当在根目录`package.json`中的设置如下 script：
+
+```bash
+{
+	"scripts": {
+    "postpublish": "git push && git push origin --tags"
+  },
+}
+```
 
 ## [Frequently asked questions](https://github.com/lerna/lerna/blob/main/FAQ.md)
