@@ -5,9 +5,9 @@
   "main": "index.js",
   "scripts": {
     "start": "node ./index.js",
-    "postversion": "npm run build",
+    "preversion": "npm run test",
+    "version": "npm run build",
     "build": "echo \"building......\"",
-    "postbuild": "npm run test",
     "test": "echo \"测试通过\" && npm run start"
   },
   "keywords": [],
@@ -16,7 +16,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@buibis/package-a": "^1.0.3-alpha.0",
+    "@buibis/package-a": "^1.0.6-alpha.0",
     "lodash": "^4.17.21"
   },
   "license": "ISC"

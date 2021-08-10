@@ -2,4 +2,4 @@ const a = 1;
 
 exports.a = a;
 
-module.exports = { b: "b22" };
+module.exports = { b: "b222" };

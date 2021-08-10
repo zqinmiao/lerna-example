@@ -118,167 +118,16 @@ Changes:
 
 然后，就会生成一个 release 相关的 commit，以及三个 git tag（三个包各一个 tag）
 
-## 生成 changelog
+## 使用 lerna [--conventional-commits](https://github.com/lerna/lerna/tree/main/commands/version#--conventional-commits)生成 changelog
 
 如果不是显式的执行`lerna version --conventional-commits`，则不会生成`CHANGELOG.md`文件。
-
-### [lerna-changelog](https://github.com/lerna/lerna-changelog)（失败）
-
-我们尝试使用`lerna-changelog`来生成`CHANGELOG.md`。
-
-它有以下特点：
-
-- repo: Your "org/repo" on GitHub (automatically inferred from the package.json file)
-
-- nextVersion: Title for unreleased commits (e.g. Unreleased)
-
-- labels: GitHub PR labels mapped to changelog section headers
-
-- ignoreCommitters: List of committers to ignore (exact or partial match). Useful for example to ignore commits from bots.
-
-- cacheDir: Path to a GitHub API response cache to avoid throttling (e.g. .changelog)
-
-**使用**
-
-```json
-# 根部 package.json
-{
-"scripts": {
-    "postversion": "lerna-changelog"
-  },
-"changelog": {
-    "labels": {
-      "feature": "🎸 New Feature",
-      "feat": "🎸 New Feature",
-      "fix": "Bug Fix"
-    }
-  }
-}
-```
-
-```bash
-$ npm install --save-dev lerna-changelog
-$ npx lerna version --no-push
-
-# 选择完各个版本后，报如下错
-
-> lerna-changelog
-
-Could not infer "repo" from the "package.json" file.
-lerna info lifecycle lerna-example@1.0.0~postversion: Failed to exec postversion script
-lerna ERR! lifecycle "postversion" errored in "lerna-example", exiting 1
-```
-
-这是因为没有在`changelog`中配置`repo`导致的，添加上：
-
-```json
-{
-  "changelog": {
-    "repo": "https://github.com/xxxx/xxx"
-  }
-}
-```
-
-执行`npx lerna-changelog`，让提供`GITHUB_AUTH`，遂放弃之。
-
-```bash
-$ npx lerna-changelog
-Must provide GITHUB_AUTH
-```
-
-**能不能结合`standard-version`，来生成`CHANGELOG.md`呢？**
-
-### 结合[`standard-version`](https://github.com/conventional-changelog/standard-version)（失败）
-
-**通过`standard-version`的工作流程:**
-
-standard-version will then do the following:
-
-1. Retrieve the current version of your repository by looking at packageFiles[1], falling back to the last git tag.
-2. bump the version in bumpFiles[1] based on your commits.
-   Generates a changelog based on your commits (uses conventional-changelog under the hood).
-3. Creates a new commit including your bumpFiles[1] and updated CHANGELOG.
-4. Creates a new tag with the new version number.
-
-**以及[lerna version 的工作流程](https://github.com/lerna/lerna/tree/main/commands/version#usage)：**
-
-When run, this command does the following:
-
-1. Identifies packages that have been updated since the previous tagged release.
-2. Prompts for a new version.
-3. Modifies package metadata to reflect new release, running appropriate lifecycle scripts in root and per-package.
-4. Commits those changes and tags the commit.
-5. Pushes to the git remote.
-
-**我想应该可以结合出以下流程：**
-
-1. 只用`standard-version`生成`CHANGELOG.md`的功能，并将其他[生命周期跳过](https://github.com/conventional-changelog/standard-version#skipping-lifecycle-steps)
-
-```js
-// 根部 .versionrc.js
-module.exports = {
-  // ..,
-  // 跳过的生命周期
-  skip: {
-    bump: true,
-    commit: true,
-    tag: true,
-  },
-};
-```
-
-2. 在根部`package.json`中增加 script
-
-```json
-{
-  "scripts": {
-    "version": "lerna run release && git add ."
-  }
-}
-```
-
-3. 在每个子 package 的`package.json`中增加 script
-
-```json
-{
-  "scripts": {
-    "release": "standard-version"
-  }
-}
-```
-
-最后在根部执行`npx lerna version --no-push`
-
-#### 但是会有问题
-
-CHANGELOG.md 内容会出现重复的现象，如下，「增加 standard-version」重复。
-
-```
-# Changelog
-## 1.2.0-alpha.0 (2021-08-06)
-
-
-### 🎸 Features
-
-* 在package-a中加入构建流程 ([647b341](https://github.com/zqinmiao/lerna-example/commit/647b3414b76b7f766b7786f9c037eb7b3f858fbf))
-* 增加standard-version ([93c7cf6](https://github.com/zqinmiao/lerna-example/commit/93c7cf623209dcdfaccb70fd818148dfcc0cad35))
-
-## 1.1.0-alpha.0 (2021-08-06)
-
-### 🎸 Features
-
-- 增加 standard-version ([93c7cf6](https://github.com/zqinmiao/lerna-example/commit/93c7cf623209dcdfaccb70fd818148dfcc0cad35))
-
-```
-
-### 使用 lerna [--conventional-commits](https://github.com/lerna/lerna/tree/main/commands/version#--conventional-commits)（成功）
 
 相关选项还有：
 
 - [--conventional-graduate](https://github.com/lerna/lerna/tree/main/commands/version#--conventional-graduate)
 - [--conventional-prerelease](https://github.com/lerna/lerna/tree/main/commands/version#--conventional-prerelease)
 
-#### 使用
+### 使用
 
 lerna.json 中增加如下配置
 
@@ -374,7 +223,7 @@ Lint 步骤一般放在更新版本号之前，即`preversion`，在每个子包
 
 ## 加入测试流程
 
-测试步骤也是放在更新版本号之前（如果有 Lint，可放在 Lint 之后），一般应为`preversion`，在每个子包的 package.json 的 scripts 设置如下：
+测试步骤也需要放在`preversion`时，在每个子包的 package.json 的 scripts 设置如下：
 
 ```json
 {
@@ -385,14 +234,16 @@ Lint 步骤一般放在更新版本号之前，即`preversion`，在每个子包
 }
 ```
 
+因为在`preversion`时，包的`node_modules`已将依赖更新至最新。如果`package-b`依赖的`package-a`有修改，也会触发`package-b`的`version lifecycle`，那么在`preversion`时，`package-b`才能拿到`package-a`的最新代码。
+
 ## 加入构建流程
 
-构建步骤一般放在更新版本号之后，即`postversion`，在每个子包的 package.json 的 scripts 设置如下：
+构建步骤放在`version`时，在每个子包的 package.json 的 scripts 设置如下：
 
 ```json
 {
   "scripts": {
-    "postversion": "npm run build",
+    "version": "npm run build",
     "build": "echo \"开始build\""
   }
 }
@@ -455,13 +306,32 @@ $ lerna import ~/Product --preserve-commit
 
 ## 包的依赖及更新
 
+[npm 的 preversion、version、postversion 的执行顺序](https://docs.npmjs.com/cli/v6/commands/npm-version)
+
+[`lerna version`的生命周期脚本](https://github.com/lerna/lerna/tree/main/commands/version#lifecycle-scripts)
+
+```bash
+// preversion:  Run BEFORE bumping the package version.
+// version:     Run AFTER bumping the package version, but BEFORE commit.
+// postversion: Run AFTER bumping the package version, and AFTER commit.
+```
+
 lerna 会分析包及包的依赖更新，假设：package-c 依赖 package-b，package-b 依赖 package-a。在一次更改中，package-a 被更改后，运行`lerna version --no-push --conventional-commits prepatch`，lerna 工作的流程如下：
 
-- 先执行`package-c`及相关的 lifecycle
-- 执行`package-a`及相关的 lifecycle
-- 最后执行`package-b`及相关的 lifecycle
+- 先执行`package-c`
+  - Run preversion lifecycle
+  - Update version in package.json
+  - Run version lifecycle
+- 执行`package-a`
+  - Run preversion lifecycle
+  - Update version in package.json
+  - Run version lifecycle
+- 最后执行`package-b`
+  - Run preversion lifecycle
+  - Update version in package.json
+  - Run version lifecycle
 
-这样的工作流就确保了依赖和被依赖的构建及测试流程能够完全符合预期。
+测试流程放在`preversion`时，构建流程放在`version`时，且如果出错了需`git checkout -- .`清除受 `bump` 影响的文件。这样的工作流就确保了依赖和被依赖的测试及构建流程能够符合预期。
 
 ### CHANGELOG.md
 
