@@ -53,7 +53,54 @@ package-c/package.json
 }
 ```
 
-## 探索工作流
+## 执行命令
+
+执行命令有：[`lerna run <script> -- [..args]`](https://github.com/lerna/lerna/tree/main/commands/run#readme)和[`lerna exec -- <command> [..args]`](https://github.com/lerna/lerna/tree/main/commands/exec#readme)两种方式
+
+### 当前工作目录的问题
+
+如果在根目录运行`npx lerna run eslint`，那么`eslint`在找相关配置文件时会在根目录找。对于旧的项目，子包中的 eslint 版本或者配置可能并不同，为了保证正确执行，需要在子包中安装对应的`eslint`。
+
+## 添加 packages
+
+### 新的 packages
+
+在`packages`文件夹中为你的的 package 创建一个目录，然后正常运行 `npm init` 为你的的新包创建 package.json。
+
+或者使用[`lerna create <name> [loc]`](https://github.com/lerna/lerna/tree/main/commands/create#readme)
+
+### 已存在的 packages
+
+您可以使用 [lerna import <package>](https://github.com/lerna/lerna/blob/main/commands/import/README.md) 将现有 package 传输到您的 Lerna 存储库中；此命令将保留提交历史记录。
+
+[lerna import <package>](https://github.com/lerna/lerna/blob/main/commands/import/README.md) 采用本地路径而不是 URL。在这种情况下，你将需要在你的文件系统上拥有您希望链接到的存储库。
+
+### 使用[`lerna add`](https://github.com/lerna/lerna/tree/main/commands/add#readme)替代`npm install`
+
+比如要将`lodash`装到`package-a`下
+
+```
+npx lerna add lodash --scope=package-a
+```
+
+做为`devDependencies`依赖
+
+```
+npx lerna add lodash --scope=package-a --dev
+```
+
+#### [--preserve-commit](https://github.com/lerna/lerna/tree/main/commands/import#--preserve-commit)
+
+建议使用`--preserve-commit`，因为这样可以保留原始的 commit 人员的记录
+
+```bash
+$ cd ~/Product
+
+# 查看路径
+$ pwd
+
+$ lerna import ~/Product --preserve-commit
+```
 
 ## lerna version
 
@@ -221,6 +268,21 @@ Lint 步骤一般放在更新版本号之前，即`preversion`，在每个子包
 }
 ```
 
+或者结合`lint-staged`、`husky`、`git hooks`进行，如：
+
+```json
+{
+  "scripts": {
+    "lint-staged": "lint-staged"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint-staged"
+    }
+  }
+}
+```
+
 ## 加入测试流程
 
 测试步骤也需要放在`preversion`时，在每个子包的 package.json 的 scripts 设置如下：
@@ -276,33 +338,6 @@ lerna publish from-package # explicitly publish packages where the latest versio
 - [publishConfig.directory](https://github.com/lerna/lerna/tree/main/commands/publish#publishconfigdirectory)
 
   如果需要指定发包的文件夹，可设置 publishConfig.directory
-
-## 添加 packages
-
-### 新的 packages
-
-在`packages`文件夹中为你的的 package 创建一个目录，然后正常运行 `npm init` 为你的的新包创建 package.json。
-
-或者使用[`lerna create <name> [loc]`](https://github.com/lerna/lerna/tree/main/commands/create#readme)
-
-### 已存在的 packages
-
-您可以使用 [lerna import <package>](https://github.com/lerna/lerna/blob/main/commands/import/README.md) 将现有 package 传输到您的 Lerna 存储库中；此命令将保留提交历史记录。
-
-[lerna import <package>](https://github.com/lerna/lerna/blob/main/commands/import/README.md) 采用本地路径而不是 URL。在这种情况下，你将需要在你的文件系统上拥有您希望链接到的存储库。
-
-#### [--preserve-commit](https://github.com/lerna/lerna/tree/main/commands/import#--preserve-commit)
-
-建议使用`--preserve-commit`，因为这样可以保留原始的 commit 人员的记录
-
-```bash
-$ cd ~/Product
-
-# 查看路径
-$ pwd
-
-$ lerna import ~/Product --preserve-commit
-```
 
 ## 包的依赖及更新
 

@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "p": "lerna publish from-package",
     "r": "lerna version --no-push --conventional-commits",
     "postpublish": "git push && git push origin --tags",
     "test": "echo \"Error: no test specified\" && exit 1"
