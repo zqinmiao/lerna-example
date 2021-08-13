@@ -1,6 +1,6 @@
 {
   "name": "@buibis/package-c",
-  "version": "0.0.9-alpha.1",
+  "version": "0.0.9-alpha.2",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -16,7 +16,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@buibis/package-b": "^1.2.5-alpha.1"
+    "@buibis/package-b": "^1.2.5-alpha.2"
   },
   "license": "ISC"
 }
