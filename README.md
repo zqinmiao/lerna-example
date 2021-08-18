@@ -353,15 +353,15 @@ lerna publish from-package # explicitly publish packages where the latest versio
 
 lerna 会分析包及包的依赖更新，假设：package-c 依赖 package-b，package-b 依赖 package-a。在一次更改中，package-a 被更改后，运行`lerna version --no-push --conventional-commits prepatch`，lerna 工作的流程如下：
 
-- 先执行`package-c`
+- 先执行`package-a`
   - Run preversion lifecycle
   - Update version in package.json
   - Run version lifecycle
-- 执行`package-a`
+- 执行`package-b`
   - Run preversion lifecycle
   - Update version in package.json
   - Run version lifecycle
-- 最后执行`package-b`
+- 最后执行`package-c`
   - Run preversion lifecycle
   - Update version in package.json
   - Run version lifecycle
@@ -395,4 +395,4 @@ lerna 会分析包及包的依赖更新，假设：package-c 依赖 package-b，
 }
 ```
 
-## [Frequently asked questions](https://github.com/lerna/lerna/blob/main/FAQ.md)
+## [Lerna Frequently asked questions](https://github.com/lerna/lerna/blob/main/FAQ.md)
