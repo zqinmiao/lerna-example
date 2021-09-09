@@ -255,6 +255,20 @@ lerna version [major | minor | patch | premajor | preminor | prepatch | prerelea
 $ npm run r prepatch
 ```
 
+## lerna version 时忽略某个包
+
+如果我们在执行`lerna version`相关操作时，想要将某个包忽略，如将`package-b`忽略，则可：
+
+```bash
+$ npx lerna version --no-push --conventional-commits --ignore-changes 'packages/package-b/**'
+```
+
+如果忽略多个
+
+```bash
+$ npx lerna version --no-push --conventional-commits --ignore-changes 'packages/package-b/**' 'packages/package-a/**'
+```
+
 ## 加入 Lint 流程
 
 Lint 步骤一般放在更新版本号之前，即`preversion`，在每个子包的 package.json 的 scripts 设置如下：
