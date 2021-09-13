@@ -269,6 +269,26 @@ $ npx lerna version --no-push --conventional-commits --ignore-changes 'packages/
 $ npx lerna version --no-push --conventional-commits --ignore-changes 'packages/package-b/**' 'packages/package-a/**'
 ```
 
+### 不能忽略的情况或者更新联动
+
+预发布的版本(无^~的版本)和精确的版本(无^~的版本)且非本地当前的版本，才不会受到联动更新。
+
+比如`package-b`中依赖的`package-a`的版本不是本地的版本`1.0.5-alpha.0`，而是线上的`1.0.3-alpha.0`。那么在更新`package-a`时，`package-b`就不会受到联动更新了。
+
+注意 ⚠️：在你降到了精确的版本后，要重新`npx lerna bootstrap`，确保`node_modules`中的依赖变更成更改后的实际版本。
+
+1. b 包做了修改（当前版本是 1.2.5），c 包依赖的 b 包版本改为无箭头的 1.2.5，执行 version 时忽略 c 包
+
+   ```bash
+   $ npx lerna version --no-push --conventional-commits --ignore-changes 'packages/package-c/**'
+
+   # c包依然触发更新版本，无法被忽略
+   Changes:
+   - @buibis/package-b: 1.2.5 => 1.3.0
+   - @buibis/package-c: 0.0.9 => 0.0.10
+
+   ```
+
 ## 加入 Lint 流程
 
 Lint 步骤一般放在更新版本号之前，即`preversion`，在每个子包的 package.json 的 scripts 设置如下：
@@ -392,10 +412,6 @@ lerna 会分析包及包的依赖更新，假设：package-c 依赖 package-b，
 **Note:** Version bump only for package @buibis/package-b
 
 ```
-
-### 依赖非 packages 中的包的版本
-
-比如`package-b`中依赖的`package-a`的版本不是本地的版本`1.0.5-alpha.0`，而是线上的`^1.0.3-alpha.0`。那么在更新`package-a`时，`package-b`就不会受到联动更新了。
 
 ## 将本地代码 push 至远程
 

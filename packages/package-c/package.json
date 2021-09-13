@@ -16,7 +16,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@buibis/package-b": "1.2.5"
+    "@buibis/package-b": "1.2.1-alpha.0"
   },
   "license": "ISC"
 }
