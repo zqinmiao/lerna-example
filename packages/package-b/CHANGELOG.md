@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.3.0](https://github.com/zqinmiao/lerna-example/compare/@buibis/package-b@1.2.5...@buibis/package-b@1.3.0) (2021-09-13)
+
+
+### 🎸 Features
+
+* update package-b ([5c2ce08](https://github.com/zqinmiao/lerna-example/commit/5c2ce08fdc0794eff1b6a37a3d03c6c466be0fba))
+
+
+
 ### [1.2.5](https://github.com/zqinmiao/lerna-example/compare/@buibis/package-b@1.2.5-alpha.3...@buibis/package-b@1.2.5) (2021-09-09)
 
 **Note:** Version bump only for package @buibis/package-b
