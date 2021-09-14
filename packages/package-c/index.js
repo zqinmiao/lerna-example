@@ -2,4 +2,4 @@ require("@buibis/package-b");
 
 const eslint = require("eslint");
 
-console.log("eslint01", eslint.CLIEngine.version);
+console.log("eslint011", eslint.CLIEngine.version);
