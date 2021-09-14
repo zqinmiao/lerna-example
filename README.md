@@ -357,6 +357,38 @@ lerna publish from-package # explicitly publish packages where the latest versio
 
 我们使用`lerna publish from-package`，因为前两个还是会提示你更改版本号，我们现在的工作流并不需要。
 
+### lerna publish [--canary] [--dist-tag <tag>]
+
+npm 包可以设置 Current Tags，`npm install`安装的是`latest`tag 上的最新版本。可以使用命令`npm publish [--tag <tag>]`，发布后的包，在 npm 源上表现形式如下：
+
+![](./docs/current-tag.png)
+
+**在 lerna 中，如何在使用`lerna publish`时，给版本打 tag 呢？**
+
+1.  （失败）`npm run p --canary`
+
+        package.json
+
+        ```json
+        {
+        	"scripts": {
+            "p": "lerna publish from-package"
+          },
+        }
+        ```
+
+        ```bash
+        $ npm run p --canary
+        ```
+
+2.  （tag 不符合预期）`npx lerna publish from-package --canary --preid alpha`
+
+    最终发布的包 tag 还是`canary`
+
+3.  （成功，且符合预期）`npx lerna publish from-package --dist-tag alpha`
+
+    成功！最终发布的包 tag 为`alpha`
+
 ### [per-package-configuration](https://github.com/lerna/lerna/tree/main/commands/publish#per-package-configuration)
 
 子包可以使用特殊的 publishConfig 进行配置，会更改 lerna publish 的行为。
