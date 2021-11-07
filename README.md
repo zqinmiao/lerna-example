@@ -71,9 +71,24 @@ package-c/package.json
 
 ### 已存在的 packages
 
+> `lerna import`存在 bug，提交历史比较多的项目会出现导入后代码缺失，不是最新的。
+
 您可以使用 [lerna import <package>](https://github.com/lerna/lerna/blob/main/commands/import/README.md) 将现有 package 传输到您的 Lerna 存储库中；此命令将保留提交历史记录。
 
 [lerna import <package>](https://github.com/lerna/lerna/blob/main/commands/import/README.md) 采用本地路径而不是 URL。在这种情况下，你将需要在你的文件系统上拥有您希望链接到的存储库。
+
+#### [--preserve-commit](https://github.com/lerna/lerna/tree/main/commands/import#--preserve-commit)
+
+建议使用`--preserve-commit`，因为这样可以保留原始的 commit 人员的记录
+
+```bash
+$ cd ~/Product
+
+# 查看路径
+$ pwd
+
+$ lerna import ~/Product --preserve-commit
+```
 
 ### 使用[`lerna add`](https://github.com/lerna/lerna/tree/main/commands/add#readme)替代`npm install`
 
@@ -87,19 +102,6 @@ npx lerna add lodash --scope=package-a
 
 ```
 npx lerna add lodash --scope=package-a --dev
-```
-
-#### [--preserve-commit](https://github.com/lerna/lerna/tree/main/commands/import#--preserve-commit)
-
-建议使用`--preserve-commit`，因为这样可以保留原始的 commit 人员的记录
-
-```bash
-$ cd ~/Product
-
-# 查看路径
-$ pwd
-
-$ lerna import ~/Product --preserve-commit
 ```
 
 ## lerna version
