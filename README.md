@@ -27,7 +27,7 @@ $ npx lerna init --independent
     └── package.json
 ```
 
-运行`lerna bootstrap`安装依赖。（lerna 架构，不推荐使用 npm install）
+运行`lerna bootstrap`安装依赖。（lerna 架构，不推荐使用 npm install，如果是 yarn2.x 则需要 yarn）
 
 > 那么根部装了`eslint`，即使`package-c`中没有装 eslint，也没有依赖 eslint。
 > 执行`npx lerna run eslint`，package-c 也能正确连接到 eslint 的 CLI，**需要在根部执行命令**
@@ -52,6 +52,10 @@ package-c/package.json
   }
 }
 ```
+
+### [--hoist [glob]](https://github.com/lerna/lerna/tree/main/commands/bootstrap#--hoist-glob)
+
+[Lerna Hoisting](https://github.com/lerna/lerna/blob/main/doc/hoist.md)
 
 ## 执行命令
 
@@ -90,7 +94,7 @@ $ pwd
 $ lerna import ~/Product --preserve-commit
 ```
 
-### 使用[`lerna add`](https://github.com/lerna/lerna/tree/main/commands/add#readme)替代`npm install`
+### 使用[`lerna add`](https://github.com/lerna/lerna/tree/main/commands/add#readme)替代`npm install`或`yarn add`(yarn 2/3 会提示--mutex 不支持)
 
 比如要将`lodash`装到`package-a`下
 
@@ -266,6 +270,8 @@ $ npx lerna version --no-push --conventional-commits --ignore-changes 'packages/
 ```
 
 如果忽略多个
+
+> 有时会出现忽略无效的场景
 
 ```bash
 $ npx lerna version --no-push --conventional-commits --ignore-changes 'packages/package-b/**' 'packages/package-a/**'
