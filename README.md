@@ -27,7 +27,7 @@ $ npx lerna init --independent
     └── package.json
 ```
 
-运行`lerna bootstrap`安装依赖。（lerna 架构，不推荐使用 npm install，如果是 yarn2.x 则需要 yarn）
+运行`npx lerna bootstrap`安装依赖。（lerna 架构，不推荐使用 npm install，lerna 与 yarn2.x 兼容性不好，使用 yarn 的话建议使用 1.x 版本）
 
 > 那么根部装了`eslint`，即使`package-c`中没有装 eslint，也没有依赖 eslint。
 > 执行`npx lerna run eslint`，package-c 也能正确连接到 eslint 的 CLI，**需要在根部执行命令**
@@ -55,7 +55,19 @@ package-c/package.json
 
 ### [--hoist [glob]](https://github.com/lerna/lerna/tree/main/commands/bootstrap#--hoist-glob)
 
-[Lerna Hoisting](https://github.com/lerna/lerna/blob/main/doc/hoist.md)
+在 repo 根目录安装与`glob`匹配的外部依赖项，以便它们可用于所有包。这些依赖项中的任何二进制文件都将链接到依赖包`node_modules/.bin/`目录，以便它们可用于 npm 脚本。如果该选项存在但没有给出 glob，则默认值为 \*\*（提升所有内容）。此选项只对 bootstrap 命令有影响。
+
+```
+$ lerna bootstrap --hoist
+```
+
+> 如果包依赖于不同版本的外部依赖，最常用的版本将被提升，并发出警告。
+>
+> --hoist 与 [file: 说明符不兼容](https://github.com/lerna/lerna/issues/1679#issuecomment-461544321)。请使用其中一种。
+>
+> 依赖包提升后，在根目录执行命令，[会导致忘记依赖的情况发生](https://github.com/lerna/lerna/blob/main/doc/hoist.md#forgetting-dependencies)
+
+[Lerna Hoisting 的背景](https://github.com/lerna/lerna/blob/main/doc/hoist.md)
 
 ## 执行命令
 
@@ -75,7 +87,7 @@ package-c/package.json
 
 ### 已存在的 packages
 
-> `lerna import`存在 bug，提交历史比较多的项目会出现导入后代码缺失，不是最新的。
+> `lerna import`存在 bug，提交历史比较多的项目会出现导入后代码缺失，不是最新的。有时候使用`--flatten`可以解决。[相关 issue](https://github.com/lerna/lerna/issues/2954)
 
 您可以使用 [lerna import <package>](https://github.com/lerna/lerna/blob/main/commands/import/README.md) 将现有 package 传输到您的 Lerna 存储库中；此命令将保留提交历史记录。
 
@@ -271,7 +283,7 @@ $ npx lerna version --no-push --conventional-commits --ignore-changes 'packages/
 
 如果忽略多个
 
-> 有时会出现忽略无效的场景
+> 有时会出现忽略无效的情况
 
 ```bash
 $ npx lerna version --no-push --conventional-commits --ignore-changes 'packages/package-b/**' 'packages/package-a/**'
@@ -285,7 +297,7 @@ $ npx lerna version --no-push --conventional-commits --ignore-changes 'packages/
 
 注意 ⚠️：在你降到了精确的版本后，要重新`npx lerna bootstrap`，确保`node_modules`中的依赖变更成更改后的实际版本。
 
-1. b 包做了修改（当前版本是 1.2.5），c 包依赖的 b 包版本改为无箭头的 1.2.5，执行 version 时忽略 c 包
+1. b 包做了修改（当前版本是 1.2.5），c 包依赖的 b 包版本改为无箭头的 1.2.5，执行 version 时忽略 c 包（**不能忽略，不符合预期**）
 
    ```bash
    $ npx lerna version --no-push --conventional-commits --ignore-changes 'packages/package-c/**'
@@ -296,6 +308,8 @@ $ npx lerna version --no-push --conventional-commits --ignore-changes 'packages/
    - @buibis/package-c: 0.0.9 => 0.0.10
 
    ```
+
+2. b 包做了修改（当前版本是 1.2.5），c 包依赖的 b 包版本改为无箭头的 1.2.4，执行 version 时忽略 c 包（**能够忽略版本联动，符合预期**）
 
 ## 加入 Lint 流程
 
@@ -358,12 +372,15 @@ Lint 步骤一般放在更新版本号之前，即`preversion`，在每个子包
 有三个命令：
 
 ```bash
-lerna publish              # publish packages that have changed since the last release
-lerna publish from-git     # explicitly publish packages tagged in the current commit
-lerna publish from-package # explicitly publish packages where the latest version is not present in the registry
+# publish packages that have changed since the last release（发布自上次发布（上次执行lerna publish）以来有更新的包）
+$ lerna publish
+# explicitly publish packages tagged in the current commit（显示发布在当前 git commit上打了 tag 的包（最新的commit信息是「tag」信息）)
+$ lerna publish from-git
+# explicitly publish packages where the latest version is not present in the registry（显式发布注册表（如：https://registry.npmjs.org/）中不存在最新版本的包）
+$ lerna publish from-package
 ```
 
-我们使用`lerna publish from-package`，因为前两个还是会提示你更改版本号，我们现在的工作流并不需要。
+我们这里使用`lerna publish from-package`，来发布新版本。
 
 ### lerna publish [--canary] [--dist-tag <tag>]
 
@@ -453,7 +470,7 @@ lerna 会分析包及包的依赖更新，假设：package-c 依赖 package-b，
 
 ```
 
-## 将本地代码 push 至远程
+## 最后将本地代码 push 至远程
 
 通常，在将各个包发布到远程 registry 后，应当第一时间将本地代码 push 至远程 git 仓库。所以应当在根目录`package.json`中的设置如下 script：
 
