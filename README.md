@@ -1,5 +1,20 @@
 # Lerna example
 
+## 2022/01/26 更新
+
+距离`lerna`最新的`v4.0.0`的发布已经快一年时间，时至今日`lerna`对 JavaScript 包管理器新特性的支持已经跟不上步伐。看样子似乎有不再维护的架势。
+
+在使用过程中也发现了其不足的地方：
+
+1. `lerna` 命令与`JavaScript 包管理器`命令混淆使用，在使用时增加了心智负担。需要文档说明约束。
+2. `lerna`不支持`yarn2`的`workspace:* url type`这种形式。[相关 issue](https://github.com/lerna/lerna/issues/2564)
+3. `lerna import`存在 bug，提交历史比较多的项目会出现导入后代码缺失，不是最新的。有时候使用`--flatten`可以解决。[相关 issue](https://github.com/lerna/lerna/issues/2954)
+4. 执行`lerna version --ignore-changes` 时，想要忽略某些包，有时会出现忽略无效的情况。（详情请查看本文的「`lerna version 时忽略某个包`」部分）
+
+优点：
+
+1. 经过业界老项目及工程的实践，在使用 npm/yarn1.x 的项目中比较稳定
+
 ## 开始的基本操作
 
 ```bash
