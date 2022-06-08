@@ -1,8 +1,14 @@
 # Lerna example
 
-## 2022/01/26 更新
+## Lerna 新的维护者
+
+2022 年 5 月 6 日，Lerna 原作者发了一篇文章[Announcement: Passing the torch](https://github.com/lerna/lerna/issues/3121)，宣布[Nrwl](https://nrwl.io/)将负责 Lerna 后面的维护工作。意味着停更了将近两年的项目重新开始了新的更迭。
+
+## 2022/01/26 记录
 
 距离`lerna`最新的`v4.0.0`的发布已经快一年时间，时至今日`lerna`对 JavaScript 包管理器新特性的支持已经跟不上步伐。看样子似乎有不再维护的架势。
+
+Github 上的 issue：[Lerna is largely unmaintained](https://github.com/lerna/lerna/issues/2703)，对于 Lerna 基本不再维护的状况，进行了大量的讨论，有兴趣的可以去考考古。
 
 在使用过程中也发现了其不足的地方：
 
