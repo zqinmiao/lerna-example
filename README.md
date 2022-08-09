@@ -208,7 +208,7 @@ Changes:
 
 然后，就会生成一个 release 相关的 commit，以及三个 git tag（三个包各一个 tag）
 
-## 使用 lerna [--conventional-commits](https://github.com/lerna/lerna/tree/main/commands/version#--conventional-commits)生成 changelog
+## 使用 lerna version [--conventional-commits](https://github.com/lerna/lerna/tree/main/commands/version#--conventional-commits)生成 changelog
 
 如果不是显式的执行`lerna version --conventional-commits`，则不会生成`CHANGELOG.md`文件。
 
@@ -335,6 +335,14 @@ $ npx lerna version --no-push --conventional-commits --ignore-changes 'packages/
    ```
 
 2. b 包做了修改（当前版本是 1.2.5），c 包依赖的 b 包版本改为无箭头的 1.2.4，执行 version 时忽略 c 包（**能够忽略版本联动，符合预期**）
+
+## lerna version [--force-publish](https://github.com/lerna/lerna/tree/main/commands/version#--force-publish) 强制更新版本号
+
+有时候我们需要在某些包没有做更改的情况下，强制更新它的版本号。这个时候就需要用到`--force-publish`
+
+```bash
+lerna version --force-publish=package-2,package-4
+```
 
 ## 加入 Lint 流程
 
