@@ -516,3 +516,5 @@ lerna 会分析包及包的依赖更新，假设：package-c 依赖 package-b，
 ```
 
 ## [Lerna Frequently asked questions](https://github.com/lerna/lerna/blob/main/FAQ.md)
+
+## [FAQ](./docs/FAQ.md)
