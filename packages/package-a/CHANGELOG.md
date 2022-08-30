@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [1.0.7-alpha.0](https://github.com/zqinmiao/lerna-example/compare/@buibis/package-a@1.0.6...@buibis/package-a@1.0.7-alpha.0) (2022-08-30)
+
+**Note:** Version bump only for package @buibis/package-a
+
+
+
+
+
 ### [1.0.6](https://github.com/zqinmiao/lerna-example/compare/@buibis/package-a@1.0.6-alpha.3...@buibis/package-a@1.0.6) (2021-09-09)
 
 **Note:** Version bump only for package @buibis/package-a
