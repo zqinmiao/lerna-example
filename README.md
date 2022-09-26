@@ -223,8 +223,11 @@ lerna.json 中增加如下配置
 
 ```json
 {
-	"version": {
-     "changelogPreset": {
+  "command": {
+    "version": {
+      "allowBranch": "master",
+      "message": "chore(release): publish 🎉",
+      "changelogPreset": {
         "name": "conventionalcommits",
         "types": [
           { "type": "feat", "section": "🎸 Features" },
@@ -514,6 +517,10 @@ lerna 会分析包及包的依赖更新，假设：package-c 依赖 package-b，
   },
 }
 ```
+
+## Filter Options
+
+[查看 filter 选项](https://github.com/lerna/lerna/tree/main/core/filter-options#readme)
 
 ## [Lerna Frequently asked questions](https://github.com/lerna/lerna/blob/main/FAQ.md)
 
